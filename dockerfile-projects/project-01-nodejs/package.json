@@ -1,0 +1,13 @@
+{
+  "name": "node-express-demo",
+  "version": "1.0.0",
+  "description": "Tiny Express app for Docker demo",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
