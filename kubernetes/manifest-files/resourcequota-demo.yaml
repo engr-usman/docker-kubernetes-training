@@ -1,0 +1,21 @@
+# Here we have two Kubernetes resources: a Namespace and a ResourceQuota.
+# The Namespace named "dev-team" is created to isolate resources for a development team.
+# The ResourceQuota named "dev-quota" is applied to the "dev-team" namespace to limit resource usage.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-team
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-quota
+  namespace: dev-team
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "10"
+    services: "5"

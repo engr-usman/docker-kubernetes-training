@@ -1,0 +1,16 @@
+# Here we have a Kubernetes Job that calculates the value of Pi to 2000 decimal places using a Perl script.
+# The Job is named "pi-job" and uses the Perl 5.34 image.
+# The Job will not restart failed pods and has a backoff limit of 4 retries.  
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl:5.34
+        command: ["perl", "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4

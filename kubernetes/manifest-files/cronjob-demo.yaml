@@ -1,0 +1,21 @@
+# Here we have a Kubernetes CronJob that runs a simple task every 2 minutes.
+# The CronJob is named "hello-cronjob" and uses the BusyBox image to print the current date and a greeting message.
+# The job will restart on failure.  
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-cronjob
+spec:
+  schedule: "*/2 * * * *"  # Every 2 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Hello from CronJob"
+          restartPolicy: OnFailure

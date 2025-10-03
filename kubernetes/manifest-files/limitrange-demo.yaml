@@ -1,0 +1,20 @@
+# This LimitRange sets default resource limits and requests for containers in a namespace.  
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mem-limit-range
+spec:
+  limits:
+  - max:
+      memory: 1Gi
+      cpu: "1"
+    min:
+      memory: 128Mi
+      cpu: "100m"
+    default:
+      memory: 512Mi
+      cpu: "500m"
+    defaultRequest:
+      memory: 256Mi
+      cpu: "250m"
+    type: Container

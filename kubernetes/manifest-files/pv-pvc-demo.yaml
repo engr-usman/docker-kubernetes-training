@@ -1,0 +1,42 @@
+# This manifest file contains three Kubernetes resources: a PersistentVolume (PV), a PersistentVolumeClaim (PVC), and a Pod that uses the PVC.
+# The PV named "my-pv" provides 1Gi of storage using a hostPath.
+# The PVC named "my-pvc" requests 1Gi of storage with ReadWriteOnce access mode.
+# The Pod named "pv-pod" mounts the PVC at /usr/share/nginx/html and runs an Nginx container.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  containers:
+  - name: app
+    image: nginx
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: storage
+  volumes:
+  - name: storage
+    persistentVolumeClaim:
+      claimName: my-pvc
